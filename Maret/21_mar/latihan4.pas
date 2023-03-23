@@ -1,8 +1,9 @@
-uses crt;
+uses
+   crt;
 
 var
-   no_debitur, ulang, tanggal, nama_debitur, kode_jenis_pinjaman, kondisi, anu, sikon : string;
-   jumlah_pinjaman, angsuran_pokok, jlm_angsuran_perbulan, jangka_waktu, bunga_sebulan, hasil_bunga, jump : real;
+   no_debitur, ulang, tanggal, nama_debitur, kode_jenis_pinjaman, kondisi, anu, sikon, yt : string;
+   jumlah_pinjaman, angsuran_pokok, jml_angsuran_perbulan, jangka_waktu, bunga_sebulan, hasil_bunga, jump : real;
    debitur_ke : integer ;
 begin
    ulang:='y';
@@ -72,9 +73,11 @@ else
      gotoxy(34,11);write('    '); 
    end;
 until kondisi='F';
-repeat
+{ Batas Loop 1 }
+while sikon<>'F' do
+begin
 gotoxy(34,14);readln(jumlah_pinjaman);
-if jumlah_pinjaman<=30000000 then
+if ((jumlah_pinjaman<=30000000) and (jumlah_pinjaman > 0)) then
    begin
      sikon:='F';
      jump:=jumlah_pinjaman;
@@ -86,20 +89,18 @@ else
      gotoxy(20,18);write('                                                       ');
      gotoxy(34,14);write('          '); 
    end;
-until sikon='F';
-
-{------ LOPPING -------}
+end;
 
 repeat
 gotoxy(67,14);readln(jangka_waktu);
-if jangka_waktu<=48 then
+if ((jangka_waktu<=48) and (jangka_waktu >0)) then
    begin
      anu:='F';
-     angsuran_pokok:=jumlah_pinjaman/jangka_waktu;
+     angsuran_pokok:=jump/jangka_waktu;
      gotoxy(34,15);write(angsuran_pokok:3:0);
-     hasil_bunga:=jumlah_pinjaman*bunga_sebulan;
+     hasil_bunga:=jump*bunga_sebulan;
      gotoxy(70,15);write(hasil_bunga:3:0);
-     jml_angsuran_perbulan:=angsuran_pokok+hasil_bunga
+     jml_angsuran_perbulan:=angsuran_pokok+hasil_bunga;
      gotoxy(34,16);write(jml_angsuran_perbulan:3:0);
    end
 else 
@@ -110,6 +111,5 @@ else
    end;
 until anu='F';
 gotoxy(20,18); write(' Apakah ada data lagi [Y/T] : '); readln(ulang);
-readln;
 end;
 end.
