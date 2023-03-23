@@ -1,10 +1,14 @@
-uses wincrt;
+uses crt;
 
 var
-   no_debitur, tanggal, nama_debitur, kode_jenis_pinjaman, kondisi, anu, sikon : string;
-   jumlah_pinjaman, jangka_waktu, bunga_sebulan, hasil_bunga, jump : real;
+   no_debitur, ulang, tanggal, nama_debitur, kode_jenis_pinjaman, kondisi, anu, sikon : string;
+   jumlah_pinjaman, angsuran_pokok, jlm_angsuran_perbulan, jangka_waktu, bunga_sebulan, hasil_bunga, jump : real;
    debitur_ke : integer ;
 begin
+   ulang:='y';
+   while ((ulang='Y') or (ulang='y')) do
+begin
+clrscr();
 {------Blok Tampilan------}
 gotoxy(10,5);write('BPR Syariah KONARYOSIH');
 gotoxy(10,6);write('Jl. Magelang-Jogja Km. 13');
@@ -91,8 +95,12 @@ gotoxy(67,14);readln(jangka_waktu);
 if jangka_waktu<=48 then
    begin
      anu:='F';
+     angsuran_pokok:=jumlah_pinjaman/jangka_waktu;
+     gotoxy(34,15);write(angsuran_pokok:3:0);
      hasil_bunga:=jumlah_pinjaman*bunga_sebulan;
      gotoxy(70,15);write(hasil_bunga:3:0);
+     jml_angsuran_perbulan:=angsuran_pokok+hasil_bunga
+     gotoxy(34,16);write(jml_angsuran_perbulan:3:0);
    end
 else 
    begin
@@ -101,8 +109,7 @@ else
      gotoxy(67,14);write('    '); 
    end;
 until anu='F';
-{gotoxy(34,9);readln(no_debitur);
-gotoxy(34,9);readln(no_debitur);}
-
+gotoxy(20,18); write(' Apakah ada data lagi [Y/T] : '); readln(ulang);
 readln;
+end;
 end.
