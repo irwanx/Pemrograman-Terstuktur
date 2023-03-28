@@ -1,8 +1,13 @@
-uses wincrt;
+uses
+    crt;
 var
-    tanggal, nama, alamat, telp, id_tujuan, paket, kondisi : string ;
+    tanggal, nama, alamat, telp, id_tujuan, kota, paket, fasilitas, kondisi, ulang, dataku : string ;
     hrg_paket1, hrg_paket2, harga_paket, jumlah_peserta, jumlah_bayar, diskon, jumlah_diskon, total_bayar, diskonku : real;
 begin
+ulang:='y';
+while ((ulang='Y') or (ulang='y')) do
+begin
+clrscr();
 {
  * BLOK TAMPILAN
 }
@@ -35,40 +40,41 @@ gotoxy(57,8);readln(tanggal);
 gotoxy(30,9);readln(nama);
 gotoxy(30,10);readln(alamat);
 gotoxy(30,11);readln(telp);
+
 repeat
 gotoxy(30,13);readln(id_tujuan);
 if id_tujuan='TJN01' then
    begin
      kondisi:='F';
-     gotoxy(57,13);write('Jakarta');
+     kota:='Jakarta';
      hrg_paket1:=1800000;
      hrg_paket2:=2200000;
    end
 else if id_tujuan='TJN02' then
    begin        
      kondisi:='F';
-     gotoxy(57,13);write('Yogyakarta'); 
+     kota:='Yogyakarta'; 
      hrg_paket1:=1800000;
      hrg_paket2:=160000;
    end
 else if id_tujuan='TJN03' then
    begin      
      kondisi:='F';
-     gotoxy(57,13);write('Bandung');
+     kota:='Bandung';
      hrg_paket1:=1800000;
      hrg_paket2:=2000000;
    end
 else if id_tujuan='TJN04' then
    begin   
      kondisi:='F';
-     gotoxy(57,13);write('Surabaya');
+     kota:='Surabaya';
      hrg_paket1:=1800000;
      hrg_paket2:=2000000;
    end
 else if id_tujuan='TJN05' then
    begin    
      kondisi:='F';
-     gotoxy(57,13);write('Bali');
+     kota:='Bali';
      hrg_paket1:=1800000;         
      hrg_paket2:=3600000;
    end
@@ -80,18 +86,27 @@ else
    end;
 until kondisi='F';
 { ------------- BATAS -------------}  
+repeat
 gotoxy(30,14);readln(paket);
 if paket='1' then
    begin               
-     gotoxy(57,14);write('Bus AC, Hotel BIntang 5');
+     dataku:='T';
+     fasilitas:='Bus AC, Hotel BIntang 5';
      harga_paket:=hrg_paket1;
    end
-else    
+else if paket='2' then 
    begin                                   
-     gotoxy(57,14);write('Bus AC VIP, Hotel Bintang 5');
+     dataku:='T';
+     fasilitas:='Bus AC VIP, Hotel Bintang 5';
      harga_paket:=hrg_paket2;
+   end
+else
+   begin
+      gotoxy(20,20);write('Kode Paket Tidak Ada [ENTER]');readln;
+      gotoxy(20,20);write('                               ');
+      gotoxy(30,14);write('     ');
    end;
-gotoxy(30,15);write('Rp. ', harga_paket:2:0);
+until dataku='T';
 { Batass }
 gotoxy(30,16);readln(jumlah_peserta);
 if jumlah_peserta>=8 then
@@ -117,8 +132,13 @@ else
      total_bayar:=jumlah_bayar;
      jumlah_diskon:=0;
    end;
+{ BLOK TAMPILAN }
+gotoxy(57,13);write(kota);
+gotoxy(57,14);write(fasilitas);
+gotoxy(30,15);write('Rp. ', harga_paket:2:0);
 gotoxy(30,17);write('Rp. ',  jumlah_bayar:2:0);
 gotoxy(57,17);write(diskonku:2:0,'% Rp. ', jumlah_diskon:2:0);
 gotoxy(45,18);write('Rp. ', total_bayar:2:0);
-readln;
+gotoxy(20,20);write('Apakah Ada Data Lagi Yang Di Inputkan? [Y/T] : ');readln(ulang);
+end;
 end.
